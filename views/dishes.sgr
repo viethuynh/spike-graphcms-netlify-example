@@ -1,10 +1,9 @@
 extends(src='layout.sgr')
   block(name='content')
     header
-      h1 Nutrikids
-      h2 Childrens Nutrition Diary
+      h1 All Dishes
       .pageImage
-        img(src='/img/records.svg')
+        img(src='/img/microphone.svg')
 
     section
       ul

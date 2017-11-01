@@ -15,8 +15,7 @@ html
     nav
       .wrap
         a(href='/') Reviews
-        a(href='/artists') Artists
-        a(href='/records') Records
+        a(href='/dishes') Dishes
 
     block(name='content')
 

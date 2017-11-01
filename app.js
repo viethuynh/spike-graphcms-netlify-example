@@ -10,7 +10,7 @@ const locals = {
   md: md.render.bind(md),
   mediaUrl: 'https://media.graphcms.com'
 }
-const apiUrl = 'https://api.graphcms.com/simple/v1/vinylbase'
+const apiUrl = 'https://api.graph.cool/simple/v1/cj9fhgrrt0ci601299vqa2e20'
 
 module.exports = {
   matchers: { html: '*(**/)*.sgr', css: '*(**/)*.sss' },
@@ -24,55 +24,27 @@ module.exports = {
   plugins: [
     new Records({
       addDataTo: locals,
-      reviews: {
+      dishes: {
         graphql: {
           url: apiUrl,
           query: `{
-            allReviews {
-              title, slug, rating, review,
-              record {
-                title, cover { handle },
-                artist { name, slug, picture { handle } }
-              }
+            allDishes {
+              name
             }
           }`
         },
-        transform: (res) => res.data.allReviews,
-        template: {
-          path: 'views/templates/review.sgr',
-          output: (review) => `review/${review.slug}.html`
-        }
-      },
-      artists: {
-        graphql: {
-          url: apiUrl,
-          query: `{
-            allArtists {
-              name, slug, bio, picture { handle },
-              records { title, slug, cover { handle } }
-            }
-          }`
+        transform: (res) => {
+          if(res.data && res.data.allDishes)
+          {
+            console.log(res.data.allDishes);
+            return res.data.allDishes;
+          }
+          console.log(res.errors);
+          return [];
         },
-        transform: (res) => res.data.allArtists,
         template: {
-          path: 'views/templates/artist.sgr',
-          output: (artist) => `artist/${artist.slug}.html`
-        }
-      },
-      records: {
-        graphql: {
-          url: apiUrl,
-          query: `{
-            allRecords {
-              title, slug, cover { handle },
-              tracks { title, length }
-            }
-          }`
-        },
-        transform: (res) => res.data.allRecords,
-        template: {
-          path: 'views/templates/record.sgr',
-          output: (record) => `record/${record.slug}.html`
+          path: 'views/templates/dish.sgr',
+          output: (dish) => `dish/${dish.slug}.html`
         }
       }
     })
